@@ -9,11 +9,11 @@ import (
 
 const DB_TYPE = "mysql"
 
-func Close(conn *DB) {
+func Close(conn *sql.DB) {
 	conn.Close()
 }
 
-func Execute(conn *DB, query string) {
+func Execute(conn *sql.DB, query string) {
 	rows, err := conn.Query(query)
 	defer rows.Close()
 
@@ -23,7 +23,7 @@ func Execute(conn *DB, query string) {
 	rows
 }
 
-func Connect(env_prefix string) {
+func Connect(env_prefix string) *sql.DB {
 	dbconf := dbconfig.Generate(env_prefix)
 	conn, err := sql.Open(
 			DB_TYPE,
